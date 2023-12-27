@@ -7,7 +7,6 @@ import {
   deleteDoc,
   doc,
 } from "firebase/firestore";
-import { getAnalytics } from "firebase/analytics";
 const firebaseConfig = {
   apiKey: "AIzaSyAGt9rwg1Njng6F_rf0sINtEpSkEdPxlnk",
   authDomain: "prueba1-7326c.firebaseapp.com",
@@ -23,7 +22,6 @@ const app = initializeApp(firebaseConfig);
 
 // Initialize Cloud Firestore and get a reference to the service
 const db = getFirestore(app);
-const analytics = getAnalytics(app);
 
 export async function getItems() {
   const collectionRef = collection(db, "products");
