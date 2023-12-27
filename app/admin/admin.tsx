@@ -1,10 +1,10 @@
-import Admin from "@/components/Admin";
-import Products from "@/components/Products";
+// pages/admin/index.tsx
 
-export default function Home() {
+import Admin from "@/components/Admin";
+
+export default function AdminPage() {
   return (
     <main>
-      <Products />
       <Admin />
     </main>
   );
