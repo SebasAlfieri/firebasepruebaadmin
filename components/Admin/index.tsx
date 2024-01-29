@@ -17,7 +17,7 @@ const Admin = () => {
   }, [dispatch]);
 
   const handleClickLogout = () => {
-    localStorage.removeItem("password");
+    localStorage.removeItem("ps");
     window.location.reload();
   };
 
