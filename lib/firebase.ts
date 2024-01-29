@@ -56,7 +56,12 @@ export async function authenticate(password: string): Promise<boolean> {
     const passwordDoc = await getDoc(doc(db, "password", "password"));
     const correctPassword = passwordDoc.data()?.password;
 
-    return password === correctPassword;
+    const isAuthenticated = password === correctPassword;
+    if (isAuthenticated) {
+      localStorage.setItem("ps", password);
+    }
+
+    return isAuthenticated;
   } catch (error) {
     console.error("Error fetching password:", error);
     return false;

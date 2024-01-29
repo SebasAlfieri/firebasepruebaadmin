@@ -1,43 +1,96 @@
 "use client";
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Admin } from "@/components";
-import { useRouter } from "next/router";
-import { db } from "@/lib/firebase";
+import { authenticate } from "@/lib/firebase";
 import { ModalContextProvider } from "@/context/ModalContext";
-import { authenticate } from "../auth";
 
 export default function AdminPage() {
+  const [loading, setLoading] = useState<boolean>(true);
+  const [userIsAdmin, setUserIsAdmin] = useState<boolean>(false);
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+
+  // testing para no tener que loggearse siempre
   useEffect(() => {
-    // Si ya estás autenticado, redirige al dashboard
-    const isLoggedIn = localStorage.getItem("isLoggedIn");
-    if (isLoggedIn) {
-      router.push("/admin/dashboard");
-    }
+    const checkAuthentication = async () => {
+      const storedPassword = localStorage.getItem("password");
+      if (storedPassword) {
+        const isAuthenticated = await authenticate(storedPassword);
+        setUserIsAdmin(isAuthenticated);
+      } else {
+        setUserIsAdmin(false);
+      }
+      setLoading(false);
+    };
+
+    checkAuthentication();
   }, []);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
-    try {
-      const isAuthenticated = await authenticate(password);
-
-      if (isAuthenticated) {
-        localStorage.setItem("isLoggedIn", "true");
-        router.push("/admin/dashboard");
-      } else {
-        setError("Contraseña incorrecta");
-      }
-    } catch (error) {
-      console.error("Error authenticating:", error);
-      setError("Error de autenticación");
+    const isAuthenticated = await authenticate(password);
+    if (isAuthenticated) {
+      setUserIsAdmin(true);
+      console.log("Autenticado correctamente");
+    } else {
+      setError("Contraseña incorrecta");
     }
   };
 
-  return (
-    <ModalContextProvider>
-      <main>
-        <Admin />
-      </main>
-    </ModalContextProvider>
-  );
+  if (userIsAdmin) {
+    return (
+      <ModalContextProvider>
+        {loading ? (
+          <p>cargando</p>
+        ) : (
+          <main>
+            <Admin />
+          </main>
+        )}
+      </ModalContextProvider>
+    );
+  } else {
+    return (
+      <>
+        {loading ? (
+          <p>cargando</p>
+        ) : (
+          <>
+            <h1>Admin Panel</h1>
+            <form onSubmit={handleSubmit}>
+              <input
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+              <button type="submit">Iniciar sesión</button>
+            </form>
+            {error && <p>{error}</p>}
+          </>
+        )}
+      </>
+    );
+  }
 }
+// return (
+
+//     {userIsAdmin ? (
+//       <main>
+//         <Admin />
+//       </main>
+//     ) : (
+//       <>
+//         <h1>Admin Panel</h1>
+//         <form onSubmit={handleSubmit}>
+//           <input
+//             type="password"
+//             value={password}
+//             onChange={(e) => setPassword(e.target.value)}
+//           />
+//           <button type="submit">Iniciar sesión</button>
+//         </form>
+//         {error && <p>{error}</p>}
+//       </>
+//     )}
+
+// )
