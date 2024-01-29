@@ -16,7 +16,7 @@ interface InputChangeEvent {
 const ItemCreator = () => {
   const [imageBase64, setImageBase64] = useState<string>("");
 
-  function handlePost(event: React.FormEvent) {
+  async function handlePost(event: React.FormEvent) {
     event.preventDefault();
     const orderData = {
       name: dataForm.name,
@@ -25,7 +25,12 @@ const ItemCreator = () => {
       image: imageBase64,
     };
 
-    createPost(orderData);
+    try {
+      await createPost(orderData);
+      window.location.reload();
+    } catch (error) {
+      console.error("Error creating post:", error);
+    }
   }
 
   const [dataForm, setDataForm] = useState<FormData>({

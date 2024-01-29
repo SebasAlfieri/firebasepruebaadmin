@@ -30,7 +30,7 @@ const Admin = () => {
           <ItemCreator />
         </Modal>
       )}
-      <Products />
+      <Products admin />
     </div>
   );
 };
