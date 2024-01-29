@@ -1,6 +1,4 @@
-// pages/admin/index.tsx
-
-import Admin from "@/components/Admin";
+import { Admin } from "@/components";
 
 export default function AdminPage() {
   return (
