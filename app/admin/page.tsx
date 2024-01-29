@@ -13,7 +13,7 @@ export default function AdminPage() {
   // testing para no tener que loggearse siempre
   useEffect(() => {
     const checkAuthentication = async () => {
-      const storedPassword = localStorage.getItem("password");
+      const storedPassword = localStorage.getItem("ps");
       if (storedPassword) {
         const isAuthenticated = await authenticate(storedPassword);
         setUserIsAdmin(isAuthenticated);
@@ -72,25 +72,3 @@ export default function AdminPage() {
     );
   }
 }
-// return (
-
-//     {userIsAdmin ? (
-//       <main>
-//         <Admin />
-//       </main>
-//     ) : (
-//       <>
-//         <h1>Admin Panel</h1>
-//         <form onSubmit={handleSubmit}>
-//           <input
-//             type="password"
-//             value={password}
-//             onChange={(e) => setPassword(e.target.value)}
-//           />
-//           <button type="submit">Iniciar sesión</button>
-//         </form>
-//         {error && <p>{error}</p>}
-//       </>
-//     )}
-
-// )

@@ -10,10 +10,6 @@ interface Product {
   tipo: string;
 }
 
-interface ProductsListProps {
-  data: Product[];
-}
-
 const Products = () => {
   const [data, setData] = useState<any>([]);
   useEffect(() => {
@@ -24,7 +20,6 @@ const Products = () => {
 
   const groupedProducts: { [key: string]: Product[] } = {};
 
-  // Agrupar los productos por tipo
   data.forEach((product: Product) => {
     const { tipo } = product;
     if (!groupedProducts[tipo]) {

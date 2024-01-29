@@ -7,7 +7,6 @@ import {
   addDoc,
   deleteDoc,
   doc,
-  DocumentReference,
 } from "firebase/firestore";
 const firebaseConfig = {
   apiKey: "AIzaSyAGt9rwg1Njng6F_rf0sINtEpSkEdPxlnk",
@@ -19,12 +18,10 @@ const firebaseConfig = {
   measurementId: "G-7DMJ9ZQS19",
 };
 
-// Initialize Firebase
 const app = initializeApp(firebaseConfig);
-
-// Initialize Cloud Firestore and get a reference to the service
 const db = getFirestore(app);
 
+// LOAD OBJECTS
 export async function getItems() {
   const collectionRef = collection(db, "products");
   let respuesta = await getDocs(collectionRef);
@@ -38,19 +35,21 @@ export async function getItems() {
   return dataDocs;
 }
 
+// CREATE OBJECT
 export async function createPost(orderData: any) {
   const collectionRef = collection(db, "products");
   let respuesta = await addDoc(collectionRef, orderData);
-  // window.location.reload();
 
   return respuesta.id;
 }
 
+// DELETE ITEM
 export async function deleteItem(itemId: string) {
   const itemRef = doc(db, "products", itemId);
   await deleteDoc(itemRef);
 }
 
+// LOGIN ADMIN
 export async function authenticate(password: string): Promise<boolean> {
   try {
     const passwordDoc = await getDoc(doc(db, "password", "password"));

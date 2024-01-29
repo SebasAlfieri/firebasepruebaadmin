@@ -72,9 +72,7 @@ const ItemCreator = () => {
           name="tipo"
           required
         >
-          <option value="" disabled selected>
-            Selecciona
-          </option>
+          <option value="">Tipo de comida</option>
           <option value="bebida">Bebida</option>
           <option value="burga">Burga</option>
           <option value="pizza">Pizza</option>
