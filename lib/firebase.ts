@@ -2,10 +2,12 @@ import { initializeApp } from "firebase/app";
 import {
   getFirestore,
   collection,
+  getDoc,
   getDocs,
   addDoc,
   deleteDoc,
   doc,
+  DocumentReference,
 } from "firebase/firestore";
 const firebaseConfig = {
   apiKey: "AIzaSyAGt9rwg1Njng6F_rf0sINtEpSkEdPxlnk",
@@ -47,6 +49,18 @@ export async function createPost(orderData: any) {
 export async function deleteItem(itemId: string) {
   const itemRef = doc(db, "products", itemId);
   await deleteDoc(itemRef);
+}
+
+export async function authenticate(password: string): Promise<boolean> {
+  try {
+    const passwordDoc = await getDoc(doc(db, "password", "password"));
+    const correctPassword = passwordDoc.data()?.password;
+
+    return password === correctPassword;
+  } catch (error) {
+    console.error("Error fetching password:", error);
+    return false;
+  }
 }
 
 export default app;
