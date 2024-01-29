@@ -1,14 +1,18 @@
-import React, { FC } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { ReactSVG } from 'react-svg';
-import s from './Modal.module.css';
-import { useModalState, useModalDispatch, closeModal } from '@/context/ModalContext';
-import useLockBodyScroll from '@/hooks/use-lock-body-scroll';
-import { Button } from '@/components';
+import React, { FC } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { ReactSVG } from "react-svg";
+import s from "./Modal.module.css";
+import {
+  useModalState,
+  useModalDispatch,
+  closeModal,
+} from "@/context/ModalContext";
+import useLockBodyScroll from "@/hooks/use-lock-body-scroll";
+// import { Button } from '@/components';
 
 const backdrop = {
   visible: { opacity: 1 },
-  hidden: { opacity: 0 }
+  hidden: { opacity: 0 },
 };
 
 interface ModalProps {
@@ -31,16 +35,17 @@ const ModalBody: FC<ModalProps> = ({ children, plantas }) => {
       variants={backdrop}
       initial="hidden"
       animate="visible"
-      exit="exit">
+      exit="exit"
+    >
       <motion.div className={s.modal__container}>
         {children}
         {plantas ? (
           <button className={s.modal__buttonPlantas} onClick={handleClose}>
-            <ReactSVG src={'/icons/menu-cerrar.svg'} width={31} height={31} />
+            <ReactSVG src={"/icons/menu-cerrar.svg"} width={31} height={31} />
           </button>
         ) : (
           <div className={s.modal__button}>
-            <Button label="CERRAR" onClick={handleClose} />
+            {/* <Button label="CERRAR" onClick={handleClose} /> */}
           </div>
         )}
       </motion.div>
