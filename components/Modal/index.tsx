@@ -45,7 +45,7 @@ const ModalBody: FC<ModalProps> = ({ children, plantas }) => {
           </button>
         ) : (
           <div className={s.modal__button}>
-            {/* <Button label="CERRAR" onClick={handleClose} /> */}
+            <button onClick={handleClose}>cerrar</button>
           </div>
         )}
       </motion.div>
@@ -53,14 +53,12 @@ const ModalBody: FC<ModalProps> = ({ children, plantas }) => {
   );
 };
 
-const Modal: FC<ModalProps> = ({ children, plantas }) => {
+const Modal: FC<ModalProps> = ({ children }) => {
   const state = useModalState();
   return (
     <>
       <AnimatePresence initial={false} mode="wait" onExitComplete={() => null}>
-        {plantas
-          ? state.visible && <ModalBody plantas>{children}</ModalBody>
-          : state.visible && <ModalBody>{children}</ModalBody>}
+        {state.visible && <ModalBody>{children}</ModalBody>}
       </AnimatePresence>
     </>
   );

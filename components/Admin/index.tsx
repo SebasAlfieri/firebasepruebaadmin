@@ -1,11 +1,30 @@
 "use client";
-import React, { useState } from "react";
-import ItemCreator from "../ItemCreator";
+import React, { useCallback } from "react";
+import _ from "lodash";
+import { Modal, ItemCreator } from "@/components";
+
+import {
+  useModalState,
+  useModalDispatch,
+  toggleModal,
+} from "@/context/ModalContext";
 
 const Admin = () => {
+  const { current } = useModalState();
+  const dispatch = useModalDispatch();
+
+  const handleClickModal = useCallback(() => {
+    dispatch(toggleModal(`item-creator`));
+  }, [dispatch]);
+
   return (
     <div>
-      <ItemCreator />
+      <button onClick={handleClickModal}>crear</button>
+      {current && _.isEqual(current, "item-creator") && (
+        <Modal key="item-creator">
+          <ItemCreator />
+        </Modal>
+      )}
     </div>
   );
 };

@@ -20,6 +20,7 @@ const ItemCreator = () => {
     const orderData = {
       nombre: dataForm.nombre,
       valor: dataForm.valor,
+      tipo: dataForm.tipo,
     };
 
     createPost(orderData);
@@ -56,7 +57,6 @@ const ItemCreator = () => {
           placeholder="producto"
           required
         />
-
         <input
           type="number"
           className="inputNumber"
@@ -66,7 +66,17 @@ const ItemCreator = () => {
           placeholder="valor"
           required
         />
-        <div className="inputsBottom"></div>
+        <select
+          value={dataForm.tipo}
+          onChange={inputChangeHandler}
+          name="tipo"
+          required
+        >
+          <option value="bebida">Bebida</option>
+          <option value="burga">Burga</option>
+          <option value="pizza">Pizza</option>
+        </select>
+        {/* <div className="inputsBottom"></div> */}
         <button type="submit">Post</button>
       </form>
     </div>

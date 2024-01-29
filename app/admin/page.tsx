@@ -1,10 +1,13 @@
 "use client";
 import { Admin } from "@/components";
+import { ModalContextProvider } from "@/context/ModalContext";
 
 export default function AdminPage() {
   return (
-    <main>
-      <Admin />
-    </main>
+    <ModalContextProvider>
+      <main>
+        <Admin />
+      </main>
+    </ModalContextProvider>
   );
 }
